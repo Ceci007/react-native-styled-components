@@ -1,17 +1,25 @@
-import { createStackNavigator } from "react-navigation-stack";
-import { createAppContainer } from "react-navigation";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import SectionScreen from "../screens/SectionScreen";
 import TabNavigator from "./TabNavigator";
 
-const AppNavigator = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Section: SectionScreen,
-  },
-  {
-    mode: "modal",
-  }
-);
+const Stack = createNativeStackNavigator();
 
-export default createAppContainer(TabNavigator);
+function AppNavigator() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="Home" component={HomeScreen} options={{}} />
+        <Stack.Screen name="Courses" component={SectionScreen} options={{}} />
+        <Stack.Screen name="Projects" component={SectionScreen} options={{}} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default AppNavigator(TabNavigator);

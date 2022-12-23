@@ -21,9 +21,13 @@ function mapDispatchToProps(dispatch) {
 const screenHeight = Dimensions.get("window").height;
 
 class Menu extends React.Component {
-  state = {
-    top: new Animated.Value(screenHeight),
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      top: new Animated.Value(screenHeight),
+    };
+  }
 
   componentDidMount() {
     this.toggleMenu();

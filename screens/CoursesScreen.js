@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/native";
 import { Button } from "react-native";
 
-class SectionScreen extends React.Component {
+class CoursesScreen extends React.Component {
   static navigationOptions = {
     headerShown: false,
   };
@@ -14,19 +14,13 @@ class SectionScreen extends React.Component {
   render() {
     return (
       <Container>
-        <Text>Section screen</Text>
-        <Button
-          title="close"
-          onPress={() => {
-            this.props.navigation.navigate("Home");
-          }}
-        />
+        <Text>Courses screen</Text>
       </Container>
     );
   }
 }
 
-export default SectionScreen;
+export default CoursesScreen;
 
 const Container = styled.View`
   flex: 1;

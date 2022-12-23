@@ -34,10 +34,14 @@ class HomeScreen extends React.Component {
     headerShown: false,
   };
 
-  state = {
-    scale: new Animated.Value(1),
-    opacity: new Animated.Value(1),
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      scale: new Animated.Value(1),
+      opacity: new Animated.Value(1),
+    };
+  }
 
   componentDidMount() {
     StatusBar.setBarStyle("dark-content", true);
@@ -129,7 +133,7 @@ class HomeScreen extends React.Component {
                   <TouchableOpacity
                     key={index}
                     onPress={() => {
-                      this.props.navigation.push("Section");
+                      this.props.navigation.navigate("Section");
                     }}
                   >
                     <Card
@@ -182,7 +186,8 @@ const Subtitle = styled.Text`
 const Container = styled.View`
   flex: 1;
   background-color: #f0f3f5;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
