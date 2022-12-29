@@ -5,8 +5,15 @@ import { Animated, TouchableOpacity, Dimensions } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MenuItem from "./MenuItem";
 
+const screenWidth = Dimensions.get("window").width;
+var cardWidth = screenWidth;
+
+if (screenWidth > 500) {
+  cardWidth = 500;
+}
+
 function mapStateToProps(state) {
-  return { action: state.action, name: state.name };
+  return { action: state.action };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -58,7 +65,7 @@ class Menu extends React.Component {
       <AnimatedContainer style={{ top: this.state.top }}>
         <Cover>
           <Image source={require("../assets/background2.jpg")} />
-          <Title>Welcome {this.props.name}</Title>
+          <Title>Welcome</Title>
           <Subtitle>Designer at design + code</Subtitle>
         </Cover>
         <TouchableOpacity
@@ -123,7 +130,8 @@ const CloseView = styled.View`
 const Container = styled.View`
   position: absolute;
   background: #fff;
-  width: 100%;
+  width: ${cardWidth}px;
+  align-self: center;
   height: 100%;
   z-index: 100;
   border-radius: 10px;

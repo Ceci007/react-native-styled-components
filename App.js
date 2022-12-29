@@ -1,4 +1,6 @@
 import React from "react";
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -14,6 +16,14 @@ const initialState = {
   action: "",
   name: "",
 };
+
+const client = new ApolloClient({
+  uri: "https://graphql.contentful.com/content/v1/spaces/s3yfkrzw80jy",
+  credentials: "same-origin",
+  headers: {
+    Authorization: `Bearer qqGfkHQ_cymHKorv4ty9MX99ydg8GxDqjPlOccIjgbc`,
+  },
+});
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -60,22 +70,24 @@ function HomeTabs() {
 }
 
 const App = () => (
-  <Provider store={store}>
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="Home Tabs" component={HomeTabs} />
-        <Stack.Screen
-          /*options={{ presentation: "modal" }}*/
-          name="Section"
-          component={SectionScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  </Provider>
+  <ApolloProvider client={client}>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="Home Tabs" component={HomeTabs} />
+          <Stack.Screen
+            /*options={{ presentation: "modal" }}*/
+            name="Section"
+            component={SectionScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  </ApolloProvider>
 );
 
 export default App;
