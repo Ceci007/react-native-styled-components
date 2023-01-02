@@ -33,6 +33,10 @@ const reducer = (state = initialState, action) => {
       return { action: "closeMenu" };
     case "UPDATE_NAME":
       return { name: action.name };
+    case "OPEN_CARD":
+      return { action: "openCard" };
+    case "CLOSE_CARD":
+      return { action: "closeCard" };
     default:
       return state;
   }
@@ -45,15 +49,16 @@ const Tab = createBottomTabNavigator();
 function HomeTabs() {
   return (
     <Tab.Navigator
+      initialRouteName="Projects"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === "Home") {
-            iconName = focused ? "ios-home" : "ios-home-outline";
+          if (route.name === "Projects") {
+            iconName = focused ? "ios-folder" : "ios-folder-outline";
           } else if (route.name === "Courses") {
             iconName = focused ? "ios-albums" : "ios-albums-outline";
-          } else if (route.name === "Projects") {
-            iconName = focused ? "ios-folder" : "ios-folder-outline";
+          } else if (route.name === "Home") {
+            iconName = focused ? "ios-home" : "ios-home-outline";
           }
           return <Ionicons name={iconName} size={26} color={color} />;
         },
@@ -62,9 +67,9 @@ function HomeTabs() {
         headerShown: false,
       })}
     >
+      <Tab.Screen name="Projects" component={ProjectsScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Courses" component={CoursesScreen} />
-      <Tab.Screen name="Projects" component={ProjectsScreen} />
     </Tab.Navigator>
   );
 }

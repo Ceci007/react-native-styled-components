@@ -149,10 +149,10 @@ class HomeScreen extends React.Component {
               <ScrollView
                 style={{
                   flexDirection: "row",
-                  paddingBottom: 20,
+                  paddingBottom: 10,
                   paddingLeft: 12,
                   paddingRight: 20,
-                  paddingTop: 30,
+                  paddingTop: 20,
                 }}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
