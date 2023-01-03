@@ -18,6 +18,7 @@ import { NotificationIcon } from "../components/Icons";
 import Logo from "../components/Logo";
 import Menu from "../components/Menu";
 import Avatar from "../components/Avatar";
+import ModalLogin from "../components/ModalLogin";
 
 const CardsQuery = gql`
   {
@@ -221,6 +222,7 @@ class HomeScreen extends React.Component {
             </ScrollView>
           </SafeAreaView>
         </AnimatedContainer>
+        <ModalLogin />
       </RootView>
     );
   }

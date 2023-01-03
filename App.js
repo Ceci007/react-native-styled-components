@@ -49,8 +49,9 @@ const Tab = createBottomTabNavigator();
 function HomeTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Projects"
+      initialRouteName="Home"
       screenOptions={({ route }) => ({
+        tabBarHideOnKeyboard: true,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
           if (route.name === "Projects") {
@@ -67,8 +68,8 @@ function HomeTabs() {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Projects" component={ProjectsScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Projects" component={ProjectsScreen} />
       <Tab.Screen name="Courses" component={CoursesScreen} />
     </Tab.Navigator>
   );
@@ -81,6 +82,7 @@ const App = () => (
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
+            tabBarHideOnKeyboard: true,
           }}
         >
           <Stack.Screen name="Home Tabs" component={HomeTabs} />

@@ -13,7 +13,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
-const tabBarHeight = 78;
+const tabBarHeight = 60;
 
 function mapStateToProps(state) {
   return {
