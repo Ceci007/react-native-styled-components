@@ -8,10 +8,16 @@ import {
   Animated,
   Dimensions,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import styled from "styled-components/native";
 import { BlurView } from "expo-blur";
 import Success from "./Success";
 import Loading from "./Loading";
+import "firebase/auth";
+import app from "./Firebase";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+const auth = getAuth(app);
 
 const screenHeight = Dimensions.get("window").height;
 
@@ -24,6 +30,11 @@ function mapDispatchToProps(dispatch) {
     closeLogin: () =>
       dispatch({
         type: "CLOSE_LOGIN",
+      }),
+    updateName: (name) =>
+      dispatch({
+        type: "UPDATE_NAME",
+        name,
       }),
   };
 }
@@ -40,6 +51,10 @@ class ModalLogin extends React.Component {
     scale: new Animated.Value(1.3),
     translateY: new Animated.Value(0),
   };
+
+  componentDidMount() {
+    this.retrieveName();
+  }
 
   componentDidUpdate() {
     if (this.props.action === "openLogin") {
@@ -80,23 +95,53 @@ class ModalLogin extends React.Component {
     }
   }
 
+  storeName = async (name) => {
+    try {
+      await AsyncStorage.setItem("name", name);
+    } catch (error) {}
+  };
+
+  retrieveName = async () => {
+    try {
+      const name = await AsyncStorage.getItem("name");
+      if (name !== null) {
+        this.props.updateName(name);
+      }
+    } catch (error) {}
+  };
+
   handleLogin = () => {
-    console.log(this.state.email, this.state.password);
     this.setState({
       isLoading: true,
     });
 
-    setTimeout(() => {
-      this.setState({ isLoading: false });
-      this.setState({ isSuccessful: true });
+    const email = this.state.email;
+    const password = this.state.password;
 
-      // Alert.alert("Congrats", "You've logged successfully!");
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        this.setState({ isLoading: false });
 
-      setTimeout(() => {
-        this.props.closeLogin();
-        this.setState({ isSuccessful: false });
-      }, 1000);
-    }, 2000);
+        if (user) {
+          this.setState({ isSuccessful: true });
+
+          // Alert.alert("Congrats", "You've logged successfully!");
+
+          this.storeName(user.email);
+          this.props.updateName(user.email);
+
+          setTimeout(() => {
+            this.props.closeLogin();
+            this.setState({ isSuccessful: false });
+          }, 1000);
+        }
+      })
+      .catch((error) => {
+        Alert.alert("Error", error.message);
+        this.setState({ isLoading: false });
+      });
   };
 
   focusEmail = () => {
